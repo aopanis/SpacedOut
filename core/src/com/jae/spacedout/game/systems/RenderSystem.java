@@ -5,6 +5,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jae.spacedout.game.components.Mappers;
@@ -37,13 +39,25 @@ public class RenderSystem extends EntitySystem
         entities = engine.getEntitiesFor(Family.all(TransformComponent.class, VisualComponent.class).get());
     }
 
+    //disposes of spritebatch
+    @Override
+    public void removedFromEngine (Engine engine)
+    {
+        this.batch.dispose();
+    }
+
     @Override
     public void update (float dt)
     {
+        //clear screen
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //update camera
         this.camera.update();
+        this.batch.setProjectionMatrix(this.camera.combined);
 
         this.batch.begin();
-        this.batch.setProjectionMatrix(camera.combined);
 
         //render all entities
         for (Entity entity : this.entities)

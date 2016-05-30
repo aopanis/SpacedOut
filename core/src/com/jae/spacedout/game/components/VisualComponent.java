@@ -9,8 +9,8 @@ public class VisualComponent implements Component, Poolable
     public TextureRegion textureRegion = null;
     public float originX = 0f;
     public float originY = 0f;
-    public float scaleX = 0f;
-    public float scaleY = 0f;
+    public float scaleX = 1f;
+    public float scaleY = 1f;
 
     //default constructor
     public VisualComponent()
@@ -34,7 +34,7 @@ public class VisualComponent implements Component, Poolable
         this.textureRegion = null;
         this.originX = 0;
         this.originY = 0;
-        this.scaleX = 0;
-        this.scaleY = 0;
+        this.scaleX = 1;
+        this.scaleY = 1;
     }
 }

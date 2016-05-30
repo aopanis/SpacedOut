@@ -3,6 +3,7 @@ package com.jae.spacedout;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Game;
 import com.jae.spacedout.game.systems.MovementSystem;
+import com.jae.spacedout.screens.GameScreen;
 
 public class SpacedOut extends Game
 {
@@ -17,6 +18,8 @@ public class SpacedOut extends Game
         this.engine = new PooledEngine(10, 5000, 10, 5000);
         this.movementSystem = new MovementSystem();
         this.engine.addSystem(this.movementSystem);
+
+        this.setScreen(new GameScreen(this.engine, this));
     }
 
     @Override
