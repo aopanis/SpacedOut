@@ -6,9 +6,18 @@ import com.jae.spacedout.game.components.PhysicsComponent;
 
 public class ImpulseCommand implements Command
 {
-    public void execute(Entity entity, float x, float y)
+    private float x;
+    private float y;
+
+    public ImpulseCommand(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void execute(Entity entity)
     {
         PhysicsComponent physics = Mappers.physics.get(entity);
-        physics.body.applyLinearImpulse(x, y, physics.body.getPosition().x, physics.body.getPosition().y, true);
+        physics.body.applyLinearImpulse(this.x, this.y, physics.body.getPosition().x, physics.body.getPosition().y, true);
     }
 }

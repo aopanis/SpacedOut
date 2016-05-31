@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CommandComponent implements Component, Poolable
 {
-    public Command[] commands = new Command[64];
+    public ArrayList<Command> commands = new ArrayList<Command>(64);
 
     //default constructor
     public CommandComponent()
@@ -19,6 +19,6 @@ public class CommandComponent implements Component, Poolable
     @Override
     public void reset()
     {
-        commands = new Command[64];
+        commands = new ArrayList<Command>(64);
     }
 }

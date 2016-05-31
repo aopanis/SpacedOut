@@ -18,7 +18,7 @@ public class PhysicsSystem extends IteratingSystem
     private World world;
 
     //for even world steps
-    private static final float MAX_STEP_TIME = 1/40f;
+    private static final float MAX_STEP_TIME = 1/60f;
     private float accumulator = 0f;
 
     public PhysicsSystem(World world, int priority)
@@ -32,7 +32,7 @@ public class PhysicsSystem extends IteratingSystem
     public void update(float dt)
     {
         this.accumulator += Math.min(dt, 0.25f);
-        if(this.accumulator >= PhysicsSystem.MAX_STEP_TIME)
+        while(this.accumulator >= PhysicsSystem.MAX_STEP_TIME)
         {
             this.world.step(PhysicsSystem.MAX_STEP_TIME, 6, 2);
             this.accumulator -= PhysicsSystem.MAX_STEP_TIME;

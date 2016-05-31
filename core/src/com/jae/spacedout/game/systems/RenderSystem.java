@@ -2,14 +2,15 @@ package com.jae.spacedout.game.systems;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+import com.jae.spacedout.game.components.CameraComponent;
 import com.jae.spacedout.game.components.Mappers;
 import com.jae.spacedout.game.components.TransformComponent;
 import com.jae.spacedout.game.components.VisualComponent;
@@ -21,20 +22,24 @@ public class RenderSystem extends SortedIteratingSystem
     private TransformComponent transform;
     private VisualComponent visual;
 
-    //list with all renderable items
-    private ImmutableArray<Entity> entities;
-
     //visual tools to render
     private SpriteBatch batch;
     private OrthographicCamera camera;
 
+    /**TESTING**/
+    public BitmapFont FONT;
+    /**TESTING**/
+
     //constructor that takes the screens camera
-    public RenderSystem (OrthographicCamera camera, int priority)
+    public RenderSystem (int priority)
     {
         super(Family.all(VisualComponent.class, TransformComponent.class).get(), new depthComparator(), priority);
 
         this.batch = new SpriteBatch();
-        this.camera = camera;
+
+        /**TESTING**/
+        this.FONT = new BitmapFont();
+        /**TESTING**/
     }
 
     @Override
@@ -52,7 +57,9 @@ public class RenderSystem extends SortedIteratingSystem
     public void addedToEngine (Engine engine)
     {
         super.addedToEngine(engine);
-        entities = engine.getEntitiesFor(Family.all(TransformComponent.class, VisualComponent.class).get());
+
+        Entity entity = engine.getEntitiesFor(Family.all(CameraComponent.class).get()).get(0);
+        this.camera = Mappers.camera.get(entity).camera;
     }
 
     //disposes of spritebatch
@@ -77,7 +84,19 @@ public class RenderSystem extends SortedIteratingSystem
         //begin batch and draw
         this.batch.begin();
         super.update(dt);
+
+        /**TESTING**/
+        if(Gdx.input.isTouched())
+        {
+            Vector3 coords = this.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            this.FONT.draw(this.batch, coords.x + ", " + coords.y, coords.x, coords.y);
+        }
+        this.FONT.draw(this.batch, "(480, 270)", 480, 270);
+        /**TESTING**/
+
         batch.end();
+
+
     }
 
     private static class depthComparator implements Comparator<Entity>
