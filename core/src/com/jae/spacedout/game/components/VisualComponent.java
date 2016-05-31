@@ -11,6 +11,7 @@ public class VisualComponent implements Component, Poolable
     public float originY = 0f;
     public float scaleX = 1f;
     public float scaleY = 1f;
+    public int depth = 0;
 
     //default constructor
     public VisualComponent()
@@ -19,13 +20,14 @@ public class VisualComponent implements Component, Poolable
     }
 
     //constructor with data
-    public VisualComponent(TextureRegion textureRegion, float originX, float originY, float scaleX, float scaleY)
+    public VisualComponent(TextureRegion textureRegion, float originX, float originY, float scaleX, float scaleY, int depth)
     {
         this.textureRegion = textureRegion;
         this.originX = originX;
         this.originY = originY;
         this.scaleX = scaleX;
         this.scaleY = scaleY;
+        this.depth = depth;
     }
 
     @Override

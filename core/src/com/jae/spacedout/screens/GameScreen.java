@@ -9,12 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.jae.spacedout.SpacedOut;
-import com.jae.spacedout.game.components.MovementComponent;
 import com.jae.spacedout.game.components.TransformComponent;
 import com.jae.spacedout.game.components.VisualComponent;
-import com.jae.spacedout.game.systems.MovementSystem;
+import com.jae.spacedout.game.systems.PhysicsSystem;
 import com.jae.spacedout.game.systems.RenderSystem;
 import com.jae.spacedout.utility.Settings;
 
@@ -26,6 +28,8 @@ public class GameScreen implements Screen
     //camera and viewport
     private OrthographicCamera camera;
     private StretchViewport viewport;
+    //box2d world
+    private World world;
 
     /** TESTING **/
     public Entity SHIP;
@@ -38,6 +42,8 @@ public class GameScreen implements Screen
         this.engine = engine;
         this.spacedOut = spacedOut;
 
+        this.world = new World(new Vector2(0, 0), true);
+
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.viewport = new StretchViewport(Settings.GAME_SCREEN_WIDTH, Settings.GAME_SCREEN_HEIGHT, this.camera);
@@ -49,17 +55,15 @@ public class GameScreen implements Screen
         TransformComponent transform = engine.createComponent(TransformComponent.class);
         transform.x = 480;
         transform.y = 270;
-        MovementComponent movement = engine.createComponent(MovementComponent.class);
         VisualComponent visual = engine.createComponent(VisualComponent.class);
         visual.textureRegion = new TextureRegion(new Texture(Gdx.files.internal("debug/ship.png")));
         visual.originX = visual.textureRegion.getRegionWidth() / 2;
         visual.originY = visual.textureRegion.getRegionHeight() / 2;
         this.SHIP.add(transform);
-        this.SHIP.add(movement);
         this.SHIP.add(visual);
         this.engine.addEntity(this.SHIP);
-        this.engine.addSystem(new MovementSystem());
-        this.engine.addSystem(new RenderSystem(this.camera));
+        this.engine.addSystem(new RenderSystem(this.camera, 0));
+        this.engine.addSystem(new PhysicsSystem(this.world, 1));
         /**TESTING**/
     }
 
@@ -77,6 +81,11 @@ public class GameScreen implements Screen
         /**TESTING**/
         this.DEBUG.setProjectionMatrix(this.camera.combined);
         this.DEBUG.begin();
+        if(Gdx.input.isTouched())
+        {
+            Vector3 coords = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            this.FONT.draw(this.DEBUG, coords.x + ", " + coords.y, coords.x, coords.y);
+        }
         this.FONT.draw(this.DEBUG, "(480, 270)", 480, 270);
         this.DEBUG.end();
         /**TESTING**/
@@ -85,7 +94,7 @@ public class GameScreen implements Screen
     @Override
     public void resize(int width, int height)
     {
-        this.viewport.update(width, height);
+        this.viewport.update(width, height, true);
     }
 
     @Override

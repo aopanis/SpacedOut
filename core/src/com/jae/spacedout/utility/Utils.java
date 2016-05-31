@@ -14,4 +14,15 @@ public class Utils
     {
         return outStart + ((inValue - inStart) * (outEnd - outStart)) / (inEnd - inStart);
     }
+
+    /** Returns an angle from 0 to 360
+     * @param degrees input angle in degrees
+     * @return normalized angle
+     */
+    public static float normalizeAngle(float degrees)
+    {
+        degrees %= 360;
+        degrees = (degrees + 360f) % 360;
+        return degrees;
+    }
 }
