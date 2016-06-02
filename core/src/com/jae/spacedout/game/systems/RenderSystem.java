@@ -47,6 +47,7 @@ public class RenderSystem extends SortedIteratingSystem
     {
         this.visual = Mappers.visual.get(entity);
         this.transform = Mappers.transform.get(entity);
+        this.batch.setColor(this.visual.getColor());
         this.batch.draw(this.visual.textureRegion, this.transform.x - this.visual.originX, this.transform.y - this.visual.originY,
                 this.visual.originX, this.visual.originY, this.visual.textureRegion.getRegionWidth(), this.visual.textureRegion.getRegionHeight(),
                 this.visual.scaleX, this.visual.scaleY, this.transform.rotation);
@@ -95,8 +96,6 @@ public class RenderSystem extends SortedIteratingSystem
         /**TESTING**/
 
         batch.end();
-
-
     }
 
     private static class depthComparator implements Comparator<Entity>

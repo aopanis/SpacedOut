@@ -10,7 +10,7 @@ public class Mappers
 
     //game logic
     public static final ComponentMapper<TransformComponent> transform = ComponentMapper.getFor(TransformComponent.class);
-    public static final ComponentMapper<PhysicsComponent> physics = ComponentMapper.getFor(PhysicsComponent.class);
+    public static final ComponentMapper<MovementComponent> movement = ComponentMapper.getFor(MovementComponent.class);
 
     //rendering
     public static final ComponentMapper<VisualComponent> visual = ComponentMapper.getFor(VisualComponent.class);

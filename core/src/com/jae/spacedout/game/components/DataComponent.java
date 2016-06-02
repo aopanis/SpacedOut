@@ -5,10 +5,11 @@ import com.badlogic.gdx.utils.Pool.Poolable;
 
 public class DataComponent implements Component, Poolable
 {
-    public int hitpoints = 0;
-    public int linearThrust = 0;
-    public int lateralThrust = 0;
-    public int rotationalThrust = 0;
+    //NOTE TO INCLUDE MASS FOR LINEAR THRUST
+    public float hitpoints = 0;
+    public float linearThrust = 0;
+    public float lateralThrust = 0;
+    public float rotationalThrust = 0;
 
     //default constructor
     public DataComponent()
@@ -17,7 +18,7 @@ public class DataComponent implements Component, Poolable
     }
 
     //constructor with data
-    public DataComponent(int hitpoints, int linearThrust, int lateralThrust, int rotationalThrust)
+    public DataComponent(float hitpoints, float linearThrust, float lateralThrust, float rotationalThrust)
     {
         this.hitpoints = hitpoints;
         this.linearThrust = linearThrust;

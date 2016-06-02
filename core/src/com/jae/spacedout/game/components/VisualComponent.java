@@ -1,6 +1,7 @@
 package com.jae.spacedout.game.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
@@ -12,6 +13,15 @@ public class VisualComponent implements Component, Poolable
     public float scaleX = 1f;
     public float scaleY = 1f;
     public int depth = 0;
+    private Color color = Color.WHITE;
+    public void setColor(Color color)
+    {
+        this.color = color.cpy();
+    }
+    public Color getColor()
+    {
+        return this.color.cpy();
+    }
 
     //default constructor
     public VisualComponent()
@@ -20,7 +30,7 @@ public class VisualComponent implements Component, Poolable
     }
 
     //constructor with data
-    public VisualComponent(TextureRegion textureRegion, float originX, float originY, float scaleX, float scaleY, int depth)
+    public VisualComponent(TextureRegion textureRegion, float originX, float originY, float scaleX, float scaleY, int depth, Color color)
     {
         this.textureRegion = textureRegion;
         this.originX = originX;
@@ -28,6 +38,7 @@ public class VisualComponent implements Component, Poolable
         this.scaleX = scaleX;
         this.scaleY = scaleY;
         this.depth = depth;
+        this.color = color;
     }
 
     @Override
@@ -38,5 +49,6 @@ public class VisualComponent implements Component, Poolable
         this.originY = 0;
         this.scaleX = 1;
         this.scaleY = 1;
+        this.color = Color.WHITE;
     }
 }

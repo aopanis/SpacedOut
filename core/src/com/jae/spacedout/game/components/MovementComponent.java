@@ -1,15 +1,16 @@
 package com.jae.spacedout.game.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class PhysicsComponent implements Component, Poolable
+public class MovementComponent implements Component, Poolable
 {
-    public Body body;
+    public float velX = 0;
+    public float velY = 0;
+    public float rotVel = 0;
 
     //default constructor
-    public PhysicsComponent()
+    public MovementComponent()
     {
 
     }
@@ -18,6 +19,8 @@ public class PhysicsComponent implements Component, Poolable
     @Override
     public void reset()
     {
-
+        this.velX = 0;
+        this.velY = 0;
+        this.rotVel = 0;
     }
 }
