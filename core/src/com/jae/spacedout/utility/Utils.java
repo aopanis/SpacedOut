@@ -25,4 +25,26 @@ public class Utils
         degrees = (degrees + 360f) % 360;
         return degrees;
     }
+
+    /** Finds the squared distance between two points
+     * @param x1 the first point's x coordinate
+     * @param y1 the first point's y coordinate
+     * @param x2 the second point's x coordinate
+     * @param y2 the second point's y coordinate
+     * @return the squared distance
+     */
+    public static float findDistanceSquared(float x1, float y1, float x2, float y2)
+    {
+        return (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+    }
+
+    /** Finds the length squared of a vector
+     * @param x the x length
+     * @param y the y length
+     * @return the squared distance
+     */
+    public static float findLengthSquared(float x, float y)
+    {
+        return x * x + y * y;
+    }
 }

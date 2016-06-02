@@ -68,15 +68,15 @@ public class ShipInputSystem extends IteratingSystem
         if(Gdx.input.isKeyPressed(Settings.strafeLeft))
         {
             MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
-            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * this.data.linearThrust * dt);
-            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * this.data.linearThrust * dt);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * this.data.lateralThrust * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * this.data.lateralThrust * dt);
             this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.strafeRight))
         {
             MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
-            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * -this.data.linearThrust * dt);
-            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * -this.data.linearThrust * dt);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * -this.data.lateralThrust * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * -this.data.lateralThrust * dt);
             this.command.commands.add(command);
         }
 

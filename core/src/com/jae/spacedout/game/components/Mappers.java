@@ -11,12 +11,11 @@ public class Mappers
     //game logic
     public static final ComponentMapper<TransformComponent> transform = ComponentMapper.getFor(TransformComponent.class);
     public static final ComponentMapper<MovementComponent> movement = ComponentMapper.getFor(MovementComponent.class);
+    public static final ComponentMapper<CommandComponent> command = ComponentMapper.getFor(CommandComponent.class);
+    public static final ComponentMapper<InputComponent> input = ComponentMapper.getFor(InputComponent.class);
 
     //rendering
     public static final ComponentMapper<VisualComponent> visual = ComponentMapper.getFor(VisualComponent.class);
     public static final ComponentMapper<CameraComponent> camera = ComponentMapper.getFor(CameraComponent.class);
-
-    //instruction
-    public static final ComponentMapper<CommandComponent> command = ComponentMapper.getFor(CommandComponent.class);
-    public static final ComponentMapper<InputComponent> input = ComponentMapper.getFor(InputComponent.class);
+    public static final ComponentMapper<ParticleComponent> particle = ComponentMapper.getFor(ParticleComponent.class);
 }

@@ -26,7 +26,8 @@ public class MovementSystem extends IteratingSystem
         this.transform.x += this.movement.velX * dt;
         this.transform.y += this.movement.velY * dt;
 
-        System.out.println(Math.sqrt(this.movement.velX * this.movement.velX + this.movement.velY * this.movement.velY));
+        //dampen horizontal motion
+        
 
         this.transform.rotation += this.movement.rotVel * dt;
     }

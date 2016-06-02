@@ -28,4 +28,27 @@ public class Settings
     public static int strafeRight = Keys.E;
 
     //endregion key_maps
+
+    //region graphical
+
+    public static int maxStars = 40;
+    public static float starMaxDuration = 5f;
+    public static float starMinDuration = 2f;
+    public static float starMinScale = 0.5f;
+    public static float starMaxScale = 1.5f;
+
+    //endregion graphical
+
+    //region textures
+
+    public static final String DEBUG_SHIP = "debug/ship.png";
+
+    public static final String STAR_1 = "environment/star1.png";
+    public static final String STAR_2 = "environment/star2.png";
+    public static final String STAR_3 = "environment/star3.png";
+    public static final String STAR_4 = "environment/star4.png";
+    public static final String STAR_5 = "environment/star5.png";
+    public static final String STAR_6 = "environment/star6.png";
+
+    //endregion textures
 }
