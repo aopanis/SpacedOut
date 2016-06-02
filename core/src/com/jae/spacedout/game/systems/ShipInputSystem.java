@@ -22,7 +22,6 @@ public class ShipInputSystem extends IteratingSystem
     private TransformComponent transform;
 
     private CommandSystem commandSystem;
-    private Command addedCommand;
 
     public ShipInputSystem(int priority)
     {
@@ -38,33 +37,49 @@ public class ShipInputSystem extends IteratingSystem
 
         this.commandSystem = this.getEngine().getSystem(CommandSystem.class);
 
+        //region movement control
+
         if(Gdx.input.isKeyPressed(Settings.forward))
         {
-            this.command.commands.add(new MoveCommand((float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * this.data.linearThrust * dt),
-                    (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * this.data.linearThrust * dt)));
+            MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * this.data.linearThrust * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * this.data.linearThrust * dt);
+            this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.back))
         {
-            this.command.commands.add(new MoveCommand((float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * -this.data.linearThrust * dt),
-                    (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * -this.data.linearThrust * dt)));
+            MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * -this.data.linearThrust * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * -this.data.linearThrust * dt);
+            this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.left))
         {
-            this.command.commands.add(new RotateCommand(this.data.rotationalThrust * dt));
+            RotateCommand command = this.commandSystem.createCommand(RotateCommand.class);
+            command.rotation = this.data.rotationalThrust * dt;
+            this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.right))
         {
-            this.command.commands.add(new RotateCommand(-this.data.rotationalThrust * dt));
+            RotateCommand command = this.commandSystem.createCommand(RotateCommand.class);
+            command.rotation = -this.data.rotationalThrust * dt;
+            this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.strafeLeft))
         {
-            this.command.commands.add(new MoveCommand((float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * this.data.linearThrust * dt),
-                    (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * this.data.linearThrust * dt)));
+            MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * this.data.linearThrust * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * this.data.linearThrust * dt);
+            this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.strafeRight))
         {
-            this.command.commands.add(new MoveCommand((float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * -this.data.linearThrust * dt),
-                    (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * -this.data.linearThrust * dt)));
+            MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * -this.data.linearThrust * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * -this.data.linearThrust * dt);
+            this.command.commands.add(command);
         }
+
+        //endregion movement control
     }
 }

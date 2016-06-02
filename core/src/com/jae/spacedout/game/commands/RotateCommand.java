@@ -6,7 +6,13 @@ import com.jae.spacedout.game.components.TransformComponent;
 
 public class RotateCommand implements Command
 {
-    private float rotation;
+    public float rotation;
+
+    //default constructor
+    public RotateCommand()
+    {
+
+    }
 
     public RotateCommand(float rotation)
     {

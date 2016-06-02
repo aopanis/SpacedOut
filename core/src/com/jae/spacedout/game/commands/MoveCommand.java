@@ -9,6 +9,8 @@ public class MoveCommand implements Command, Poolable
 {
     public float x;
     public float y;
+    private float oldVelX;
+    private float oldVelY;
 
     //default constructor
     public MoveCommand()
@@ -27,8 +29,18 @@ public class MoveCommand implements Command, Poolable
     public void execute(Entity entity)
     {
         MovementComponent movement = Mappers.movement.get(entity);
+
+        this.oldVelX = movement.velX;
+        this.oldVelY = movement.velY;
+
         movement.velX += this.x;
         movement.velY += this.y;
+
+        if(movement.velX * movement.velX + movement.velY * movement.velY > movement.maxVel * movement.maxVel)
+        {
+            movement.velX = this.oldVelX;
+            movement.velY = this.oldVelY;
+        }
     }
 
     @Override

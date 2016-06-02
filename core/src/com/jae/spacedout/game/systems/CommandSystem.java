@@ -17,8 +17,9 @@ import java.util.Iterator;
 public class CommandSystem extends IteratingSystem
 {
     //command component in order to not reallocate
-    private CommandComponent command;
+    private CommandComponent commandComponent;
     private Iterator<Command> iterator;
+    private Command command;
 
     //pool for commands for memory reasons
     private CommandPool commandPool;
@@ -37,11 +38,13 @@ public class CommandSystem extends IteratingSystem
     @Override
     protected void processEntity(Entity entity, float dt)
     {
-        this.command = Mappers.command.get(entity);
-        this.iterator = this.command.commands.iterator();
+        this.commandComponent = Mappers.command.get(entity);
+        this.iterator = this.commandComponent.commands.iterator();
         while(this.iterator.hasNext())
         {
-            iterator.next().execute(entity);
+            this.command = iterator.next();
+            this.command.execute(entity);
+            this.commandPool.free(this.command);
             iterator.remove();
         }
     }

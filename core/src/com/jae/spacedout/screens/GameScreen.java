@@ -53,6 +53,7 @@ public class GameScreen implements Screen
         visual.setColor(Color.WHITE);
 
         MovementComponent movement = engine.createComponent(MovementComponent.class);
+        movement.maxVel = 200;
 
         InputComponent input = engine.createComponent(InputComponent.class);
 

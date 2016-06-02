@@ -8,6 +8,7 @@ public class MovementComponent implements Component, Poolable
     public float velX = 0;
     public float velY = 0;
     public float rotVel = 0;
+    public float maxVel = 0;
 
     //default constructor
     public MovementComponent()
@@ -22,5 +23,6 @@ public class MovementComponent implements Component, Poolable
         this.velX = 0;
         this.velY = 0;
         this.rotVel = 0;
+        this.maxVel = 0;
     }
 }
