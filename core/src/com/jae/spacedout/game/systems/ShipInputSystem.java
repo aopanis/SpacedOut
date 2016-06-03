@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.jae.spacedout.game.commands.Command;
 import com.jae.spacedout.game.commands.MoveCommand;
 import com.jae.spacedout.game.commands.RotateCommand;
+import com.jae.spacedout.game.commands.ShootCommand;
 import com.jae.spacedout.game.components.CommandComponent;
 import com.jae.spacedout.game.components.DataComponent;
 import com.jae.spacedout.game.components.InputComponent;
@@ -42,44 +43,50 @@ public class ShipInputSystem extends IteratingSystem
         if(Gdx.input.isKeyPressed(Settings.forward))
         {
             MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
-            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * this.data.linearThrust * dt);
-            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * this.data.linearThrust * dt);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * (this.data.stats.baseThrustLinear / this.data.stats.baseMass) * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * (this.data.stats.baseThrustLinear / this.data.stats.baseMass) * dt);
             this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.back))
         {
             MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
-            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * -this.data.linearThrust * dt);
-            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * -this.data.linearThrust * dt);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * -(this.data.stats.baseThrustLinear / this.data.stats.baseMass) * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * -(this.data.stats.baseThrustLinear / this.data.stats.baseMass) * dt);
             this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.left))
         {
             RotateCommand command = this.commandSystem.createCommand(RotateCommand.class);
-            command.rotation = this.data.rotationalThrust * dt;
+            command.rotation = (this.data.stats.baseThrustRotational / this.data.stats.baseMass) * dt;
             this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.right))
         {
             RotateCommand command = this.commandSystem.createCommand(RotateCommand.class);
-            command.rotation = -this.data.rotationalThrust * dt;
+            command.rotation = -(this.data.stats.baseThrustRotational / this.data.stats.baseMass) * dt;
             this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.strafeLeft))
         {
             MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
-            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * this.data.lateralThrust * dt);
-            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * this.data.lateralThrust * dt);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * (this.data.stats.baseThrustLateral / this.data.stats.baseMass) * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * (this.data.stats.baseThrustLateral / this.data.stats.baseMass) * dt);
             this.command.commands.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.strafeRight))
         {
             MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
-            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * -this.data.lateralThrust * dt);
-            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * -this.data.lateralThrust * dt);
+            command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * -(this.data.stats.baseThrustLateral / this.data.stats.baseMass) * dt);
+            command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * -(this.data.stats.baseThrustLateral / this.data.stats.baseMass) * dt);
             this.command.commands.add(command);
         }
 
         //endregion movement control
+
+        if(Gdx.input.isKeyPressed(Settings.shootWeapon))
+        {
+            ShootCommand command = this.commandSystem.createCommand(ShootCommand.class);
+            this.command.commands.add(command);
+        }
     }
 }

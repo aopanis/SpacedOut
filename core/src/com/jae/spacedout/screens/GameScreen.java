@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.jae.spacedout.SpacedOut;
@@ -14,18 +13,25 @@ import com.jae.spacedout.game.components.CameraComponent;
 import com.jae.spacedout.game.components.CommandComponent;
 import com.jae.spacedout.game.components.DataComponent;
 import com.jae.spacedout.game.components.InputComponent;
+import com.jae.spacedout.game.components.Mappers;
 import com.jae.spacedout.game.components.MovementComponent;
 import com.jae.spacedout.game.components.TransformComponent;
 import com.jae.spacedout.game.components.VisualComponent;
+import com.jae.spacedout.game.components.WeaponComponent;
+import com.jae.spacedout.game.stats.ShipStats;
+import com.jae.spacedout.game.stats.WeaponStatHolder;
+import com.jae.spacedout.game.stats.WeaponStats;
 import com.jae.spacedout.game.systems.CameraSystem;
 import com.jae.spacedout.game.systems.CommandSystem;
-import com.jae.spacedout.game.systems.EnvironmentManager;
+import com.jae.spacedout.game.systems.ParticleManager;
 import com.jae.spacedout.game.systems.ShipInputSystem;
 import com.jae.spacedout.game.systems.MovementSystem;
 import com.jae.spacedout.game.systems.RenderSystem;
+import com.jae.spacedout.game.systems.WeaponSystem;
 import com.jae.spacedout.utility.Settings;
 
 import java.util.Random;
+import java.util.Set;
 
 public class GameScreen implements Screen
 {
@@ -34,7 +40,7 @@ public class GameScreen implements Screen
     private final SpacedOut spacedOut;
 
     //environment generator
-    private EnvironmentManager manager;
+    private ParticleManager environmentManager;
 
     //random number generator
     private final Random random;
@@ -60,7 +66,7 @@ public class GameScreen implements Screen
         transform.y = Settings.GAME_SCREEN_HEIGHT / 2;
 
         VisualComponent visual = engine.createComponent(VisualComponent.class);
-        visual.textureRegion = this.spacedOut.assets.getRegion(Settings.DEBUG_SHIP);
+        visual.textureRegion = this.spacedOut.assets.getRegion(ShipStats.getStats("JM1").texPath);
         visual.originX = visual.textureRegion.getRegionWidth() / 2;
         visual.originY = visual.textureRegion.getRegionHeight() / 2;
         visual.setColor(Color.WHITE);
@@ -71,19 +77,24 @@ public class GameScreen implements Screen
         InputComponent input = engine.createComponent(InputComponent.class);
 
         DataComponent data = engine.createComponent(DataComponent.class);
-        data.hitpoints = 500;
-        data.linearThrust = 80;
-        data.lateralThrust = 40;
-        data.rotationalThrust = 80;
+        data.stats = ShipStats.getStats("JM1");
+        data.engine = this.engine;
 
         CommandComponent command = engine.createComponent(CommandComponent.class);
 
-        this.SHIP.add(transform);
-        this.SHIP.add(visual);
-        this.SHIP.add(movement);
-        this.SHIP.add(input);
-        this.SHIP.add(data);
-        this.SHIP.add(command);
+        WeaponComponent weapon = engine.createComponent(WeaponComponent.class);
+        weapon.shouldShoot = new boolean[data.stats.weaponSlots];
+        weapon.shotTimer = new float[data.stats.weaponSlots];
+        weapon.stats = new WeaponStatHolder[data.stats.weaponSlots];
+        for(int i = 0; i < data.stats.weaponSlots; i++)
+        {
+            weapon.shouldShoot[i] = false;
+            weapon.shotTimer[i] = 0f;
+            weapon.stats[i] = WeaponStats.getStats("KN1");
+        }
+        weapon.owner = this.SHIP;
+
+        this.SHIP.add(transform).add(visual).add(movement).add(input).add(data).add(command).add(weapon);
 
         CameraComponent camera = engine.createComponent(CameraComponent.class);
         camera.camera = new OrthographicCamera();
@@ -95,11 +106,12 @@ public class GameScreen implements Screen
 
         this.engine.addEntity(this.SHIP);
         this.engine.addEntity(this.CAMERA);
-        this.engine.addSystem(new CameraSystem(4));
+        this.engine.addSystem(new CameraSystem(5));
         this.engine.addSystem(new RenderSystem(0));
         this.engine.addSystem(new ShipInputSystem(1));
         this.engine.addSystem(new CommandSystem(2));
         this.engine.addSystem(new MovementSystem(3));
+        this.engine.addSystem(new WeaponSystem(this.spacedOut.assets, 4));
         /**TESTING**/
 
         TextureRegion[] textures = new TextureRegion[6];
@@ -109,7 +121,9 @@ public class GameScreen implements Screen
         textures[3] = this.spacedOut.assets.getRegion(Settings.STAR_4);
         textures[4] = this.spacedOut.assets.getRegion(Settings.STAR_5);
         textures[5] = this.spacedOut.assets.getRegion(Settings.STAR_6);
-        this.manager = new EnvironmentManager(this.engine, this.SHIP, this.random, textures);
+        this.environmentManager = new ParticleManager(this.engine, this.SHIP, this.random, textures,
+                Settings.GAME_SCREEN_WIDTH, Settings.starMinScale, Settings.starMaxScale, 0f, 360f, Settings.GAME_SCREEN_WIDTH * 1.2f,
+                Settings.starMinDuration, Settings.starMaxDuration);
     }
 
     @Override
@@ -122,7 +136,7 @@ public class GameScreen implements Screen
     public void render(float delta)
     {
         this.engine.update(delta);
-        this.manager.update(delta);
+        this.environmentManager.update(delta);
     }
 
     @Override

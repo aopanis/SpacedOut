@@ -18,4 +18,8 @@ public class Mappers
     public static final ComponentMapper<VisualComponent> visual = ComponentMapper.getFor(VisualComponent.class);
     public static final ComponentMapper<CameraComponent> camera = ComponentMapper.getFor(CameraComponent.class);
     public static final ComponentMapper<ParticleComponent> particle = ComponentMapper.getFor(ParticleComponent.class);
+
+    //ships
+    public static final ComponentMapper<WeaponComponent> weapon = ComponentMapper.getFor(WeaponComponent.class);
+    public static final ComponentMapper<BulletComponent> bullet = ComponentMapper.getFor(BulletComponent.class);
 }

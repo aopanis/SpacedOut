@@ -9,7 +9,7 @@ public class Settings
     public static final int GAME_SCREEN_WIDTH = 960;
     public static final int GAME_SCREEN_HEIGHT = 540;
 
-    public static float minZoom = 0.1f;
+    public static float minZoom = 0.5f;
     public static float maxZoom = 2.0f;
     public static float zoomSpeed = 0.5f;
 
@@ -27,6 +27,8 @@ public class Settings
     public static int strafeLeft = Keys.Q;
     public static int strafeRight = Keys.E;
 
+    public static int shootWeapon = Keys.SPACE;
+
     //endregion key_maps
 
     //region graphical
@@ -40,8 +42,6 @@ public class Settings
     //endregion graphical
 
     //region textures
-
-    public static final String DEBUG_SHIP = "debug/ship.png";
 
     public static final String STAR_1 = "environment/star1.png";
     public static final String STAR_2 = "environment/star2.png";
