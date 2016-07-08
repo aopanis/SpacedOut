@@ -9,7 +9,9 @@ public class MovementComponent implements Component, Poolable
     public float velY = 0;
     public float rotVel = 0;
     public float maxVel = 0;
-    public boolean dampenHorizontal = true;
+    public float maxRotVel = 0;
+    public float maxAcc = 0;
+    public float maxRotAcc = 0;
 
     //default constructor
     public MovementComponent()
@@ -25,6 +27,8 @@ public class MovementComponent implements Component, Poolable
         this.velY = 0;
         this.rotVel = 0;
         this.maxVel = 0;
-        this.dampenHorizontal = true;
+        this.maxRotVel = 0;
+        this.maxAcc = 0;
+        this.maxRotAcc = 0;
     }
 }

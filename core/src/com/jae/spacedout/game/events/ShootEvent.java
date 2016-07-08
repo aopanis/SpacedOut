@@ -1,16 +1,14 @@
-package com.jae.spacedout.game.commands;
+package com.jae.spacedout.game.events;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.jae.spacedout.game.components.Mappers;
 import com.jae.spacedout.game.components.WeaponComponent;
 
-public class ShootCommand implements Command, Poolable
+public class ShootEvent implements Event, Poolable
 {
-    //int whichWeapon = 0;
-
     //default constructor
-    public ShootCommand()
+    public ShootEvent()
     {
 
     }

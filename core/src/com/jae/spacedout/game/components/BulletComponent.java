@@ -8,8 +8,8 @@ import com.jae.spacedout.game.stats.WeaponStatHolder;
 public class BulletComponent implements Component, Poolable
 {
     public Entity owner;
-    public float maxDistance;
-    public int damage;
+    public WeaponStatHolder stats;
+    public float distaceTraveled;
 
     //default constructor
     public BulletComponent()

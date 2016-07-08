@@ -25,8 +25,10 @@ public class CameraSystem extends IteratingSystem
     {
         this.camera = Mappers.camera.get(entity);
         this.transform = Mappers.transform.get(this.camera.entity);
-        this.camera.camera.position.x += (this.transform.x - this.camera.camera.position.x) * this.cameraLerp * dt;
-        this.camera.camera.position.y += (this.transform.y - this.camera.camera.position.y) * this.cameraLerp * dt;
+        //this.camera.camera.position.x += (this.transform.x - this.camera.camera.position.x) * this.cameraLerp * dt;
+        //this.camera.camera.position.y += (this.transform.y - this.camera.camera.position.y) * this.cameraLerp * dt;
+        this.camera.camera.position.x = this.transform.x;
+        this.camera.camera.position.y = this.transform.y;
 
         //region zoom controls
 

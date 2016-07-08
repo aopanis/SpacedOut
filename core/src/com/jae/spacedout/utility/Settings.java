@@ -51,4 +51,10 @@ public class Settings
     public static final String STAR_6 = "environment/star6.png";
 
     //endregion textures
+
+    //region gameplay
+
+    public static boolean shouldLeadShots = true;
+
+    //endregion gameplay
 }

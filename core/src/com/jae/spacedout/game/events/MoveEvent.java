@@ -1,11 +1,11 @@
-package com.jae.spacedout.game.commands;
+package com.jae.spacedout.game.events;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.jae.spacedout.game.components.Mappers;
 import com.jae.spacedout.game.components.MovementComponent;
 
-public class MoveCommand implements Command, Poolable
+public class MoveEvent implements Event, Poolable
 {
     public float x;
     public float y;
@@ -13,16 +13,10 @@ public class MoveCommand implements Command, Poolable
     private float oldVelY;
 
     //default constructor
-    public MoveCommand()
+    public MoveEvent()
     {
         this.x = 0;
         this.y = 0;
-    }
-
-    public MoveCommand(float x, float y)
-    {
-        this.x = x;
-        this.y = y;
     }
 
     @Override

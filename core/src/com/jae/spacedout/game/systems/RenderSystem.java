@@ -86,14 +86,14 @@ public class RenderSystem extends SortedIteratingSystem
         this.batch.begin();
         super.update(dt);
 
-        /**TESTING**/
+        /**TESTING**//*
         if(Gdx.input.isTouched())
         {
             Vector3 coords = this.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             this.FONT.draw(this.batch, coords.x + ", " + coords.y, coords.x, coords.y);
         }
         this.FONT.draw(this.batch, "(480, 270)", 480, 270);
-        /**TESTING**/
+        *//**TESTING**/
 
         batch.end();
     }

@@ -4,11 +4,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
-import com.jae.spacedout.game.commands.Command;
-import com.jae.spacedout.game.commands.MoveCommand;
-import com.jae.spacedout.game.commands.RotateCommand;
-import com.jae.spacedout.game.commands.ShootCommand;
-import com.jae.spacedout.game.components.CommandComponent;
+import com.jae.spacedout.game.events.MoveEvent;
+import com.jae.spacedout.game.events.RotateEvent;
+import com.jae.spacedout.game.events.ShootEvent;
+import com.jae.spacedout.game.components.EventComponent;
 import com.jae.spacedout.game.components.DataComponent;
 import com.jae.spacedout.game.components.InputComponent;
 import com.jae.spacedout.game.components.Mappers;
@@ -18,15 +17,15 @@ import com.jae.spacedout.utility.Settings;
 
 public class ShipInputSystem extends IteratingSystem
 {
-    private CommandComponent command;
+    private EventComponent command;
     private DataComponent data;
     private TransformComponent transform;
 
-    private CommandSystem commandSystem;
+    private EventSystem commandSystem;
 
     public ShipInputSystem(int priority)
     {
-        super(Family.all(CommandComponent.class, MovementComponent.class, InputComponent.class, DataComponent.class).get(), priority);
+        super(Family.all(EventComponent.class, MovementComponent.class, InputComponent.class, DataComponent.class).get(), priority);
     }
 
     @Override
@@ -35,58 +34,59 @@ public class ShipInputSystem extends IteratingSystem
         this.command = Mappers.command.get(entity);
         this.data = Mappers.data.get(entity);
         this.transform = Mappers.transform.get(entity);
-
-        this.commandSystem = this.getEngine().getSystem(CommandSystem.class);
+        this.commandSystem = this.getEngine().getSystem(EventSystem.class);
 
         //region movement control
 
         if(Gdx.input.isKeyPressed(Settings.forward))
         {
-            MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
+            MoveEvent command = this.commandSystem.createCommand(MoveEvent.class);
             command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * (this.data.stats.baseThrustLinear / this.data.stats.baseMass) * dt);
             command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * (this.data.stats.baseThrustLinear / this.data.stats.baseMass) * dt);
-            this.command.commands.add(command);
+            this.command.events.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.back))
         {
-            MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
+            MoveEvent command = this.commandSystem.createCommand(MoveEvent.class);
             command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 90)) * -(this.data.stats.baseThrustLinear / this.data.stats.baseMass) * dt);
             command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 90)) * -(this.data.stats.baseThrustLinear / this.data.stats.baseMass) * dt);
-            this.command.commands.add(command);
+            this.command.events.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.left))
         {
-            RotateCommand command = this.commandSystem.createCommand(RotateCommand.class);
+            RotateEvent command = this.commandSystem.createCommand(RotateEvent.class);
             command.rotation = (this.data.stats.baseThrustRotational / this.data.stats.baseMass) * dt;
-            this.command.commands.add(command);
+            command.dt = dt;
+            this.command.events.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.right))
         {
-            RotateCommand command = this.commandSystem.createCommand(RotateCommand.class);
+            RotateEvent command = this.commandSystem.createCommand(RotateEvent.class);
             command.rotation = -(this.data.stats.baseThrustRotational / this.data.stats.baseMass) * dt;
-            this.command.commands.add(command);
+            command.dt = dt;
+            this.command.events.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.strafeLeft))
         {
-            MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
+            MoveEvent command = this.commandSystem.createCommand(MoveEvent.class);
             command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * (this.data.stats.baseThrustLateral / this.data.stats.baseMass) * dt);
             command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * (this.data.stats.baseThrustLateral / this.data.stats.baseMass) * dt);
-            this.command.commands.add(command);
+            this.command.events.add(command);
         }
         if(Gdx.input.isKeyPressed(Settings.strafeRight))
         {
-            MoveCommand command = this.commandSystem.createCommand(MoveCommand.class);
+            MoveEvent command = this.commandSystem.createCommand(MoveEvent.class);
             command.x = (float)(Math.cos(Math.toRadians(this.transform.rotation + 180)) * -(this.data.stats.baseThrustLateral / this.data.stats.baseMass) * dt);
             command.y = (float)(Math.sin(Math.toRadians(this.transform.rotation + 180)) * -(this.data.stats.baseThrustLateral / this.data.stats.baseMass) * dt);
-            this.command.commands.add(command);
+            this.command.events.add(command);
         }
 
         //endregion movement control
 
         if(Gdx.input.isKeyPressed(Settings.shootWeapon))
         {
-            ShootCommand command = this.commandSystem.createCommand(ShootCommand.class);
-            this.command.commands.add(command);
+            ShootEvent command = this.commandSystem.createCommand(ShootEvent.class);
+            this.command.events.add(command);
         }
     }
 }

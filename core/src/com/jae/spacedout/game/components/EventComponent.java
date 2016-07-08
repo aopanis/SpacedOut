@@ -2,16 +2,16 @@ package com.jae.spacedout.game.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.jae.spacedout.game.commands.Command;
+import com.jae.spacedout.game.events.Event;
 
 import java.util.ArrayList;
 
-public class CommandComponent implements Component, Poolable
+public class EventComponent implements Component, Poolable
 {
-    public ArrayList<Command> commands = new ArrayList<Command>(64);
+    public ArrayList<Event> events = new ArrayList<Event>(64);
 
     //default constructor
-    public CommandComponent()
+    public EventComponent()
     {
 
     }
@@ -19,6 +19,6 @@ public class CommandComponent implements Component, Poolable
     @Override
     public void reset()
     {
-        commands = new ArrayList<Command>(64);
+        events = new ArrayList<Event>(64);
     }
 }

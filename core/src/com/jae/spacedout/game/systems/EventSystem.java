@@ -1,6 +1,5 @@
 package com.jae.spacedout.game.systems;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -8,29 +7,25 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.ReflectionPool;
-import com.jae.spacedout.game.commands.Command;
-import com.jae.spacedout.game.components.CommandComponent;
+import com.jae.spacedout.game.events.Event;
+import com.jae.spacedout.game.components.EventComponent;
 import com.jae.spacedout.game.components.Mappers;
 
 import java.util.Iterator;
 
-public class CommandSystem extends IteratingSystem
+public class EventSystem extends IteratingSystem
 {
-    //command component in order to not reallocate
-    private CommandComponent commandComponent;
-    private Iterator<Command> iterator;
-    private Command command;
+    //event component in order to not reallocate
+    private EventComponent eventComponent;
+    private Iterator<Event> iterator;
+    private Event event;
 
-    //pool for commands for memory reasons
+    //pool for events for memory reasons
     private CommandPool commandPool;
-    public CommandPool getCommandPool()
-    {
-        return this.commandPool;
-    }
 
-    public CommandSystem(int priority)
+    public EventSystem(int priority)
     {
-        super(Family.all(CommandComponent.class).get(), priority);
+        super(Family.all(EventComponent.class).get(), priority);
 
         this.commandPool = new CommandPool(50, 100);
     }
@@ -38,18 +33,18 @@ public class CommandSystem extends IteratingSystem
     @Override
     protected void processEntity(Entity entity, float dt)
     {
-        this.commandComponent = Mappers.command.get(entity);
-        this.iterator = this.commandComponent.commands.iterator();
+        this.eventComponent = Mappers.command.get(entity);
+        this.iterator = this.eventComponent.events.iterator();
         while(this.iterator.hasNext())
         {
-            this.command = iterator.next();
-            this.command.execute(entity);
-            this.commandPool.free(this.command);
+            this.event = iterator.next();
+            this.event.execute(entity);
+            this.commandPool.free(this.event);
             iterator.remove();
         }
     }
 
-    public <T extends Command> T createCommand (Class<T> commandType)
+    public <T extends Event> T createCommand (Class<T> commandType)
     {
         return this.commandPool.obtain(commandType);
     }
@@ -59,7 +54,7 @@ public class CommandSystem extends IteratingSystem
         this.commandPool.clear();
     }
 
-    //pools for different command classes
+    //pools for different event classes
     public class CommandPool
     {
         private ObjectMap<Class<?>, ReflectionPool> pools;

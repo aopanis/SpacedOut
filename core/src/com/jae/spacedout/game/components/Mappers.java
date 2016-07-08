@@ -7,11 +7,12 @@ public class Mappers
 {
     //data
     public static final ComponentMapper<DataComponent> data = ComponentMapper.getFor(DataComponent.class);
+    public static final ComponentMapper<TeamComponent> team = ComponentMapper.getFor(TeamComponent.class);
 
     //game logic
     public static final ComponentMapper<TransformComponent> transform = ComponentMapper.getFor(TransformComponent.class);
     public static final ComponentMapper<MovementComponent> movement = ComponentMapper.getFor(MovementComponent.class);
-    public static final ComponentMapper<CommandComponent> command = ComponentMapper.getFor(CommandComponent.class);
+    public static final ComponentMapper<EventComponent> command = ComponentMapper.getFor(EventComponent.class);
     public static final ComponentMapper<InputComponent> input = ComponentMapper.getFor(InputComponent.class);
 
     //rendering
@@ -22,4 +23,6 @@ public class Mappers
     //ships
     public static final ComponentMapper<WeaponComponent> weapon = ComponentMapper.getFor(WeaponComponent.class);
     public static final ComponentMapper<BulletComponent> bullet = ComponentMapper.getFor(BulletComponent.class);
+    public static final ComponentMapper<SteeringAIComponent> steeringAI = ComponentMapper.getFor(SteeringAIComponent.class);
+    public static final ComponentMapper<BoundingComponent> bounding = ComponentMapper.getFor(BoundingComponent.class);
 }

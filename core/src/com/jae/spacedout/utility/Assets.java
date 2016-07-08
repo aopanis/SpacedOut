@@ -3,7 +3,9 @@ package com.jae.spacedout.utility;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.jae.spacedout.game.stats.ShipStatHolder;
 import com.jae.spacedout.game.stats.ShipStats;
+import com.jae.spacedout.game.stats.WeaponStatHolder;
 import com.jae.spacedout.game.stats.WeaponStats;
 
 public class Assets
@@ -24,13 +26,19 @@ public class Assets
     {
         //region ship textures
 
-        this.manager.load(ShipStats.getStats("JM1").texPath, Texture.class);
+        for(ShipStatHolder holder : ShipStats.ships)
+        {
+            this.manager.load(holder.texPath, Texture.class);
+        }
 
         //endregion ship textures
 
         //region bullet textures
 
-        this.manager.load(WeaponStats.getStats("KN1").bulletTexPath, Texture.class);
+        for(WeaponStatHolder holder : WeaponStats.weapons)
+        {
+            this.manager.load(holder.bulletTexPath, Texture.class);
+        }
 
         //endregion bullet textures
 

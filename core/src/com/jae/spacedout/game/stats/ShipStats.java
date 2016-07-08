@@ -8,7 +8,7 @@ public class ShipStats
     private static final ShipStatHolder shipJM1 = new ShipStatHolder("debug/ship.png", "JM1", 2, 2, 500, 50000,
             4000000, 3000000, 4000000, 500, ShipStats.JM1positions);
 
-    private static final ShipStatHolder[] ships = {
+    public static final ShipStatHolder[] ships = {
             ShipStats.shipJM1
     };
 
