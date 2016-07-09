@@ -14,7 +14,6 @@ import com.jae.spacedout.game.components.VisualComponent;
 import com.jae.spacedout.game.components.WeaponComponent;
 import com.jae.spacedout.utility.Assets;
 import com.jae.spacedout.utility.Utils;
-import com.sun.javafx.geom.Vec2d;
 
 import java.util.Random;
 

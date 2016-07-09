@@ -43,12 +43,12 @@ public class Settings
 
     //region textures
 
-    public static final String STAR_1 = "environment/star1.png";
-    public static final String STAR_2 = "environment/star2.png";
-    public static final String STAR_3 = "environment/star3.png";
-    public static final String STAR_4 = "environment/star4.png";
-    public static final String STAR_5 = "environment/star5.png";
-    public static final String STAR_6 = "environment/star6.png";
+    public static final String STAR_1 = "android/assets/environment/star1.png";
+    public static final String STAR_2 = "android/assets/environment/star2.png";
+    public static final String STAR_3 = "android/assets/environment/star3.png";
+    public static final String STAR_4 = "android/assets/environment/star4.png";
+    public static final String STAR_5 = "android/assets/environment/star5.png";
+    public static final String STAR_6 = "android/assets/environment/star6.png";
 
     //endregion textures
 
