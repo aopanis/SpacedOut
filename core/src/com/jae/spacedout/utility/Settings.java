@@ -50,6 +50,11 @@ public class Settings
     public static final String STAR_5 = "android/assets/environment/star5.png";
     public static final String STAR_6 = "android/assets/environment/star6.png";
 
+    public static final String SHIP = "android/assets/debug/ship.png";
+
+    public static final String LASER_1 = "android/assets/ships/projectiles/laser.png";
+    public static final String LASER_2 = "android/assets/ships/projectiles/heavyLaser.png";
+
     //endregion textures
 
     //region gameplay
